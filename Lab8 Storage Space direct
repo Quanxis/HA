@@ -1,0 +1,72 @@
+### Storage Spaces Direct (S2D) Overview
+
+Storage Spaces Direct (S2D) is a feature in Windows Server that allows you to create a highly available and scalable storage system using local storage from multiple servers.
+S2D aggregates the local storage (e.g., HDDs, SSDs) into a single, highly resilient pool. This pool can then be used to create virtual disks, or volumes, which are spread across the nodes for redundancy and performance.
+
+"cluster" refers to a group of interconnected computers (nodes) that work together to provide continuous availability and reliability for applications.
+The main goals are to ensure that the system remains operational even if one or more nodes fail and to distribute workloads efficiently.
+
+
+### Steps Breakdown
+
+#### Setting Things Up
+
+1. *VMs Setup:*
+    
+    - *SERVERDC*: This VM acts as the domain controller.
+    - *SERVER1 and SERVER2*: These VMs will be configured as nodes in the S2D cluster.
+2. *Reverting to Domain Snapshot:*
+    
+    - Ensure that all VMs are in a known, good state by reverting to a snapshot where they are all part of the domain.
+3. *Starting VMs:*
+    
+    - Boot up SERVERDC, SERVER1, and SERVER2.
+4. *Installing Failover Clustering:*
+    
+    - On SERVER1 and SERVER2, install the Failover Clustering feature, which is necessary to create and manage the cluster.
+
+#### Configuration
+
+1. *Install Failover Clustering on SERVER1 and SERVER2:*
+    
+    - Redundant step from setup, ensuring both servers are ready for clustering.
+2. *Login and Start Failover Cluster Manager:*
+    
+    - Log in as a domain admin on one of the node servers (either SERVER1 or SERVER2) and open Failover Cluster Manager to manage the cluster.
+3. *Validate SERVER1 and SERVER2:*
+    
+    - Run the cluster validation wizard to ensure SERVER1 and SERVER2 meet the requirements to form a cluster.
+4. *Create a New Cluster:*
+    
+    - Create a new cluster named VSAN, assigning it an IP address from the same subnet. Initially, do not add any disks to the cluster.
+5. *Enable Storage Spaces Direct (S2D) using PowerShell:*
+    
+    - Execute the command: Enable-ClusterS2D -autoconfig:0 -poolfriendlyname VSANcluster -cachestate:0
+    - This configures S2D, naming the pool "VSANcluster" and disabling caching.
+6. *Verify Configuration:*
+    
+    - Use PowerShell to verify the configuration: get-storagesubsystem *cluster* | get-storagepool | get-physicaldisk
+    - This command checks the storage subsystem, storage pool, and physical disks.
+7. *Create a New Storage Pool in Failover Cluster Manager:*
+    
+    - Create a new storage pool named VSANpool using all the available disks from the VSAN cluster.
+8. *Create Volumes using PowerShell:*
+    
+    - Create two volumes within the VSANpool:
+        - get-storagepool VSANpool | New-volume -FriendlyName vsanVOL1 -Size 20GB
+        - get-storagepool VSANpool | New-volume -FriendlyName vsanVOL2 -Size 10GB
+9. *Assign Drive Letters:*
+    
+    - Assign drive letters V: and W: to the newly created volumes. Change the owner nodes as necessary to ensure both servers can access the volumes and assign drive letters.
+10. *Take a Screenshot:*
+    
+
+- Capture the details of the volumes in Failover Cluster Manager (FCM) and the disks in Windows Explorer on the owner node.
+
+11. *Simulate Node Failure:*
+
+- Power off the owner node and observe the changes in the cluster. Describe how the volumes are handled by the remaining node.
+
+#### Prepare for the Next Lab
+
+- Revert all SERVER VMs to the Domain snapshot to reset the environment for the next lab session.
