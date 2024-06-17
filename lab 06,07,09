@@ -1,0 +1,59 @@
+Lab 06
+•	Create DAG, on server dc active dir users and computer, create new computer called DAG.
+•	Enable advanced feature in View menu, then in properties add,  “Exchange Trusted Subsystem” full control.
+•	 Add server 1 and 2 computer object with Full Control. Then disable DAG computer acc.
+•	Since we are going to use SERVERDC as witness, we need to add “Exchange Trusted Subsystem” in BuiltIn -> Administrators group. 
+
+
+Lab 07 Hyper V , Clustering
+
+•	Install Hyper V on both servers and configure the file paths for disks and VMs
+•	Setup the Virtual switch in Virtual switch manager 
+•	Hyper-V settings, enable replication with desired path file.
+•	Server1, create new VM and make sure the firewalls are disabled in all servers
+•	If it doesn’t replicate check the network adapter in server2 and make sure u can ping from server 1 to 2.
+•	When you turn of the server 1 ,do fail over in server2
+•	
+Lab 7.2
+•	Add vm in cluster
+•	For disk wintess go to cluster and more options, click on configure cluster quorum settings
+•	Add vm in hyper v, then go to 
+•	validation wont work in sever3, install failover and hyper v, add this to cluster, under nodes in cluster and I have to select server 3.
+
+
+
+•	Replication-process of copying and maintaining data across multiple servers or locations to ensure continuous access and reliability in the event of a failure. This approach enhances data redundancy by creating multiple copies, ensuring that if one server fails, the data can still be accessed from another
+•	Failover's primary goal is to ensure continuous operation by automatically switching to a standby server or system in case the primary server or system fails.
+•	A planned failover might not work the first time due to various reasons related to the configuration and state of the replication process. Here are the common reasons and steps to troubleshoot and resolve the issue:
+
+Common Reasons for Planned Failover Failure:
+1.	Replication Health Issues:
+o	If there are existing errors or warnings in the replication health, the planned failover will not proceed. Ensure that the replication status is healthy.
+2.	Network Connectivity:
+o	The planned failover requires communication between the primary and replica servers. Any network issues or misconfigurations can cause the failover to fail.
+3.	Pending Replication Jobs:
+o	If there are pending replication jobs or if the data is not fully synchronized, the planned failover will not work. Ensure that all data is replicated and synchronized.
+4.	Permissions and Authentication:
+o	Ensure that the necessary permissions and authentication methods (Kerberos) are correctly configured on both servers. Any discrepancies can cause failover to fail.
+5.	Configuration Errors:
+o	Incorrect configuration settings in Hyper-V replication can prevent a successful failover. Verify all settings and ensure they are correctly configured.
+
+Task 3: Simulate Failed Node Replacement in Cluster
+
+In this task, you are required to simulate the replacement of a failed node within a cluster environment. Initially, you will power off SERVER1 in the VUA Cloud environment to simulate a failure scenario.
+Following this, you will power on SERVER3 and assign it the IP address 10.10.10.14/24. The next step involves installing all necessary roles and features on SERVER3 to ensure it is configured correctly to join the existing cluster. 
+This includes installing Hyper-V and Failover Clustering roles and configuring network settings identical to those on SERVER1 and SERVER2. After SERVER3 is fully configured and integrated into the cluster, you will transfer the virtual machine (VM) running on the cluster to the newly added node, SERVER3.
+This transfer demonstrates the cluster's ability to maintain high availability and operational continuity even when a node fails and is replaced by a new node.
+The process ensures that the virtual environment remains resilient and continues to provide services without significant downtime, effectively validating the cluster's failover and node replacement capabilities.
+
+Lab 09
+
+1.	1.Install windows server backup feature , for server dc and server.
+2.	For full server backup, In server , add 2 disks and spanned volume.
+3.	Go to tools,  windows server backup, local backup, click on backup once, click on BareMetal recovery FOR FULL BACKUP, don’t lick on the disk we just created to store the fullbackup.
+4.	Go to server1
+5.	For system state backup, don’t span. Use master boot record for system state back up
+same for I did for fullbackup.
+
+
+
