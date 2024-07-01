@@ -154,4 +154,16 @@ Answer: Enable S2D on the cluster using Enable-ClusterS2D, verify the configurat
 5. What is Software-Defined Storage (SDS), and what are its benefits?
 
 Answer: SDS abstracts storage management from the underlying hardware, providing flexibility, automation, cost savings, agility, and advanced data services.
-By understanding these detailed steps, additional concepts, and potential questions, you will be well-prepared to discuss and implement Storage Spaces Direct and software-defined storage solutions.
+By understanding these detailed steps, additional concepts, and potential questions, you willbe well-prepared to discuss and implement Storage Spaces Direct and software-defined storage solutions.
+
+----------------------------------------
+Since we dont have permitions on server 3 ans server 4 to exectue the storage spaces here is a  guide of what shoud be done
+after crating a cluster do the following commands
+Enable-ClusterS2D -autoconfig:0 -poolfriendlyname StorageCluster -cachestate:0
+To enable storage spaces and the eligible storage
+And after that to validate the configuration
+get-storagesubsystem *cluster* | get-storagepool | get-physicaldisk
+and Stuck on 19% and times out 
+
+Storage spaces help us protect our data from driver daliures and extend storage over time as we add drive to our servers. We can use storage sace to group two or more driver 
+together in a storage pool and then use pool capacity to crate virtual drives called storage spaces
