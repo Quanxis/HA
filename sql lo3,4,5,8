@@ -1,0 +1,165 @@
+LO3
+Task 1: Configure a DHCP Scope
+Steps:
+Open DHCP Management Console:
+
+Go to SERVER1.
+Open the DHCP Management Console (DHCP Manager).
+Create a New DHCP Scope:
+
+Right-click on the IPv4 node and select New Scope.
+Name the scope scope-lastname-group (replace "lastname" with your own last name).
+Define the IP address range for the scope. For example, set a starting IP address and an ending IP address.
+Configure Scope Options:
+
+Add the IP address of the DNS server already present in the domain.
+Add the same IP address of the DNS server as the IP address for the router (default gateway).
+Activate the Scope:
+
+Complete the wizard to activate the scope.
+Take a Screenshot:
+
+Ensure the scope details and configurations are visible.
+Take a screenshot without cropping.
+Concepts:
+DHCP (Dynamic Host Configuration Protocol): Automatically assigns IP addresses to devices on a network.
+DHCP Scope: A range of IP addresses that the DHCP server can assign to clients.
+DNS Server Option: Specifies the IP address of the DNS server that clients should use.
+Default Gateway: The IP address of the router that clients use to communicate outside the local network.
+Task 2: Configure Another DHCP Scope
+Steps:
+Open DHCP Management Console:
+
+Go to SERVER1.
+Open the DHCP Management Console (DHCP Manager).
+Create a New DHCP Scope:
+
+Right-click on the IPv4 node and select New Scope.
+Name the scope other scope-lastname group (replace "lastname" with your own last name).
+Define the IP address range for the scope.
+Leave DHCP Options Empty:
+
+Skip the DHCP options configuration steps.
+Complete the wizard to activate the scope.
+Take a Screenshot:
+
+Ensure the scope details and configurations are visible.
+Take a screenshot without cropping.
+Concepts:
+DHCP Options: Additional parameters (like DNS server, gateway, etc.) that can be provided to clients. In this case, they are left empty.
+Task 3: Configure DHCP Failover
+Steps:
+Open DHCP Management Console:
+
+Go to SERVER1.
+Open the DHCP Management Console (DHCP Manager).
+Configure Failover for Scopes:
+
+Right-click on the scope-lastname-group scope and select Configure Failover.
+Select Add Scope and then select other scope-lastname group.
+Choose SERVER2 as the partner server.
+Set the load balancing mode to distribute 60% of the load to SERVER1.
+Ensure the shared secret is not used.
+Complete the Configuration:
+
+Complete the failover configuration wizard.
+Take a Screenshot:
+
+Ensure the failover settings are visible.
+Take a screenshot without cropping.
+---------------------------------------------------
+
+SQL
+
+Install SQL Server on SERVER1 and SERVER2:
+
+Ensure that SQL Server is installed on both servers with the same instance name.
+Enable AlwaysOn Availability Groups:
+
+Open SQL Server Configuration Manager on SERVER1 and SERVER2.
+Go to SQL Server Services.
+Right-click on the SQL Server instance and select Properties.
+Go to the AlwaysOn High Availability tab.
+Check the box to enable AlwaysOn Availability Groups.
+Restart the SQL Server service.
+Configure a Windows Failover Cluster:
+
+Open Failover Cluster Manager on SERVER1.
+Create a new cluster and add SERVER1 and SERVER2 as nodes.
+Validate the cluster configuration.
+Name the cluster (e.g., "SQLCluster") and assign a cluster IP address.
+Create a Screenshot:
+
+Ensure the configuration details are visible.
+Take a screenshot without cropping.
+
+Task 2: Create Databases and Configure Availability Groups
+LO3_M (3 points)
+Steps:
+
+Create Databases on SERVER1:
+
+Open SQL Server Management Studio (SSMS) on SERVER1.
+Connect to the SQL Server instance.
+Create two new databases named midterm2DB1 and midterm2DB2.
+sql
+Copy code
+CREATE DATABASE midterm2DB1;
+CREATE DATABASE midterm2DB2;
+Configure Availability Group for midterm2DB1:
+
+In SSMS, right-click on the AlwaysOn High Availability node and select New Availability Group Wizard.
+Name the availability group (e.g., AG_midterm2DB1).
+Select midterm2DB1 as the database to add.
+Configure the secondary replica (SERVER2) and set the availability mode.
+Choose the backup preference and configure the listener if needed.
+Complete the wizard.
+Configure Availability Group for midterm2DB2:
+
+Repeat the steps above to create another availability group for midterm2DB2.
+Ensure that SQL Server creates a full and log backup before sharing it across to SERVER2.
+Create a Screenshot:
+
+Ensure the availability group configurations are visible.
+Take a screenshot without cropping.
+Task 3: Other Methods of Making an SQL Server Highly Available
+LO3_D (3 points)
+
+Methods of High Availability for SQL Server:
+
+Database Mirroring:
+
+Description: Maintains a copy of the database on a standby server.
+Benefits:
+Provides high availability and disaster recovery.
+Automatic failover in high-safety mode.
+Drawbacks:
+Deprecated in favor of AlwaysOn Availability Groups.
+Requires manual intervention for failover in high-performance mode.
+Log Shipping:
+
+Description: Automatically sends transaction log backups from one server to another.
+Benefits:
+Simple to set up and manage.
+Provides a warm standby server.
+Drawbacks:
+No automatic failover; requires manual intervention.
+Data loss possible as it relies on log backups.
+Replication:
+
+Description: Distributes data across multiple servers using different replication methods (Snapshot, Transactional, Merge).
+Benefits:
+Allows data distribution and redundancy.
+Flexible topology options.
+Drawbacks:
+Complex setup and management.
+Potential latency issues with data synchronization.
+Failover Clustering:
+
+Description: Uses Windows Server Failover Clustering to provide high availability at the instance level.
+Benefits:
+Provides automatic failover.
+No data loss during failover.
+Drawbacks:
+Requires shared storage (SAN or iSCSI).
+Higher cost and complexity.
