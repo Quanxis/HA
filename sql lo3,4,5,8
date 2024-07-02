@@ -163,3 +163,11 @@ No data loss during failover.
 Drawbacks:
 Requires shared storage (SAN or iSCSI).
 Higher cost and complexity.
+
+-The main options for creating a file server cluster are the amounts of nodes that we have in a cluster. If we have two nodes, we need a witness to decide which of the node states is correct. It's cheap but it's also the most unreliable way of setting up a file cluster.
+If we have three nodes of more, we are more resilient to hardware failure, the more nodes we have (up to a reasonable point) the better because we're going to have a much better quorum.
+
+-The main options for creating a file server cluster are the amounts of nodes that we have in a cluster. If we have two nodes, we need a witness to decide which of the node states is correct. It's cheap but it's also the most unreliable way of setting up a file cluster.
+If we have three nodes of more, we are more resilient to hardware failure, the more nodes we have (up to a reasonable point) the better because we're going to have a much better quorum.
+
+-Some of the protocols that we can use are SMB Direct, which can increase the throughput, has lower latency and utilizes the CPU less. However not all the hardware can support the protocol. We can also use SMB 3.0.
